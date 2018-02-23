@@ -4,7 +4,7 @@ package com.ediro.test;
 import javax.inject.Inject;
 //import javax.sql.DataSource;
 
-import org.apache.ibatis.session.SqlSession;
+
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
