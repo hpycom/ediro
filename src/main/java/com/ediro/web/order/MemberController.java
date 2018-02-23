@@ -1,4 +1,4 @@
-package com.ediro.web.eOrder;
+package com.ediro.web.order;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class RegisterController {
+public class MemberController {
 
-	private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
-	@RequestMapping(value = "/eOrder/Register/joinMember", method = RequestMethod.GET)
+	@RequestMapping(value = "/order/member/joinMember", method = RequestMethod.GET)
 
 	public String joinMember(Locale locale, Model model) {
 	
@@ -29,7 +29,7 @@ public class RegisterController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "eOrder/Register/joinMember";
+		return "order/member/joinMember";
 	}
 
 }

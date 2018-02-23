@@ -12,4 +12,7 @@
   	insert into tbl_member(userid,userpw,username,email) values
   	(#{userid},#{userpw},#{username},#{email})
   </insert>
+  
+
+  
 </mapper>
