@@ -3,17 +3,15 @@ package com.ediro.test;
 import javax.inject.Inject;
 //import javax.sql.DataSource;
 
-
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.ediro.domain.order.member;
-import com.ediro.persistence.order.memberDAO;
+import com.ediro.domain.member;
+import com.ediro.persistence.memberDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations= {"file:src/main/webapp/WEB-INF/spring/**/root-context.xml"})

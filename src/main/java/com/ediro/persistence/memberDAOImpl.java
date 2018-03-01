@@ -1,4 +1,4 @@
-package com.ediro.persistence.order;
+package com.ediro.persistence;
 
 
 import java.util.List;
@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.ediro.domain.order.member;
+import com.ediro.domain.member;
 
 @Repository
 public class memberDAOImpl  implements memberDAO{
@@ -16,7 +16,7 @@ public class memberDAOImpl  implements memberDAO{
 	@Inject
 	private SqlSession session;
 	
-	private static String namespace = "com.ediro.mapper.order.member";
+	private static String namespace = "com.ediro.mapper.member";
 
 	@Override
 	public void getNow() throws Exception{

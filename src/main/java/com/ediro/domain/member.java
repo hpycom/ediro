@@ -1,4 +1,4 @@
-package com.ediro.domain.order;
+package com.ediro.domain;
 
 public class member {
 

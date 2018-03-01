@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.ediro.mapper.order.member">
+<mapper namespace="com.ediro.mapper.member">
   
   <select id="getTime" resultType="string">
     select now()
@@ -15,7 +15,7 @@
   	  #{address},#{phone},#{phone_2},#{email},#{homepage},#{fax})
   </insert>
   
-    <select id="sel_allMember" resultType="com.ediro.domain.order.member">
+    <select id="sel_allMember" resultType="com.ediro.domain.member">
   	select memberNo,
   	       memberID,
   	       memberPwd,

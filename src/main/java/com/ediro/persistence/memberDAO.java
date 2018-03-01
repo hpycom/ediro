@@ -1,7 +1,7 @@
-package com.ediro.persistence.order;
+package com.ediro.persistence;
 
 import java.util.List;
-import com.ediro.domain.order.*;
+import com.ediro.domain.member;
 
 public interface memberDAO {
 
