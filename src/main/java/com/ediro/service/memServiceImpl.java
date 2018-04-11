@@ -20,4 +20,8 @@ public class memServiceImpl implements memService {
 	public List<member> memberAll() throws Exception{
 		return dao.listAll();
 	}
+	@Override
+	 public int memberIDCount(String memberID) throws Exception{
+		return dao.memberIDCount(memberID);
+	}
 }

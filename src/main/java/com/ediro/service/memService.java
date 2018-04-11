@@ -7,5 +7,5 @@ public interface memService {
 	
 	public void join(member mem) throws Exception;
 	public List<member> memberAll() throws Exception;
-
+    public int memberIDCount(String memberID) throws Exception;
 }

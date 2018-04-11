@@ -30,6 +30,10 @@ public class memberDAOImpl  implements memberDAO{
 	}
 
 	@Override
+	 public int memberIDCount(String memberID) throws Exception{
+		return (int)session.selectOne(namespace +".getMemberIDCnt",memberID);
+	}
+	@Override
 	public List<member> listAll() throws Exception {
 		return session.selectList(namespace+".sel_allMember");
 		

@@ -29,7 +29,7 @@ public class memberDaoTest {
 		dao.getNow();
 	}
 	
-	@Test
+	/*@Test
 	public void testCreate() throws Exception{
 		member mem = new member();
 		mem.setMemberID("hpycom");
@@ -47,6 +47,15 @@ public class memberDaoTest {
 		
 		dao.createMember(mem);
 		
+	}*/
+	
+	@Test
+	public void testGetMemberIDCount() throws Exception{
+		int idcnt =	dao.memberIDCount("hpycom");
+		
+		System.out.println(idcnt);
+			
 	}
+
 	
 }

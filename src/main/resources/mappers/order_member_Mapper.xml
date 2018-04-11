@@ -31,4 +31,8 @@
   		   fax
   	from member order by memberNO		
     </select>
+    
+  <select id="getMemberIDCnt" resultType="int">
+       select count(*) from member where memberID = #{memberID}
+  </select>
 </mapper>
