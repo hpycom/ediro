@@ -27,17 +27,34 @@
 	              </div>
 		     </div>
 		 </div>
-		  <div class="row">
-			 <div class="col-md-4 mb-1 ">
+		 <div class="row">
+			
+			 <div class="col-md-5 mb-1 ">
 			  <label for="memberID">아이디</label>
-				<input type="text" class="form-control" name="memberID" id="memberID" required/>
-				  <div class="invalid-feedback">
-	                  	아이디를 입력해 주세요
-	              </div>
+				
+				 <div class="input-group">
+					<input type="text" class="form-control " name="memberID" id="memberID"  pattern=".{6,}" required/>
+					 
+					  <div class="input-group-append">
+		                 	 	  <input class="btn btn-outline-dark" id="btnDupIDcheck" type="button" value="아이디중복" >
+		              </div>
+		                
+					  <div class="invalid-feedback">
+		                  	아이디를 여섯자 이상 주세요
+		              </div>
+		              
+			     </div>
+			   
+			     <input type="text" class="form-control " id = "idDupCheck" required>
+					<div class="invalid-feedback">
+		                  	중복체크 해주세요
+		              </div>
+			     <p class="help-block" id="p_dupChkID"><span></span></p>
 		     </div>
 		 </div>
 		 <div class="row">
 			 <div class="col-md-3 mb-1 ">
+			 
 			  <label for="memberID">비밀번호</label>
 				<input type="password" class="form-control" name="memberPwd" id="memberPwd" pattern=".{4,}" required/>
 				  <div class="invalid-feedback">
@@ -126,8 +143,8 @@
 	           </div>
            <div class="row">
            		<div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
-<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
-</div>
+					<img src="//t1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+				</div>
            </div>
            <div class="row mb-4 form-group" >
 		            <div class="col-md-8 ">
@@ -149,25 +166,33 @@
      	<hr class="mb-4">
 	
 		<div class="row">
-	
-		<div class="col-2 ml-5">
-			<button class="btn btn-primary btn-lg btn-block" type="submit">저장</button>
-		</div>
+			<div class="col-md-2 ml-1">
+				<button class="btn btn-primary btn-lg btn-block" type="submit">저장</button>
+			</div>
 		</div>
 	</form>
  </div> <!-- container -->
  
  
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="/resources/bootStrap/js/bootstrap.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
 
+$("#idDupCheck").hide();
+
+$("#memberID").change(function() {
+	$('#idDupCheck').val('');
+	$("#p_dupChkID span").text('');
+});
+	
 (function() {
   'use strict';
+ 
   window.addEventListener('load', function() {
+	  
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     var forms = document.getElementsByClassName('needs-validation');
     // Loop over them and prevent submission
@@ -177,12 +202,53 @@
           event.preventDefault();
           event.stopPropagation();
         }
+       
         form.classList.add('was-validated');
       }, false);
     });
   }, false);
    
 })();
+
+$("#btnDupIDcheck").on("click",function(){
+	
+	var idName = $("#memberID").val();
+	if(idName.length <6)
+		{
+			alert('여섯자 이상 넣어주세요!');
+			return;
+		}
+	$.ajax({
+		type:'POST',
+		url:'/order/member_rest/isMember/'+idName,
+		headers:{
+			"Content-Type":"application/json",
+			"X-HTTP-Method-Override":"POST"
+		},
+		dataType:'text',
+		success: function(result){
+			if (result == 0)
+				{
+				$("#p_dupChkID  span").css('color','blue');
+				
+				$("#p_dupChkID  span").text(' 사용하셔도 되는 아이디 입니다. ');
+					//alert('사용하셔도 되는 아이디 입니다.');
+					$("#idDupCheck").val('checked');
+					
+				}
+			else
+				{
+				$("#p_dupChkID span").css('color','red');
+				
+				$("#p_dupChkID span").text('중복되는 아이디 입니다.');
+				
+					//alert('중복되는 아이디 입니다.');
+					$("#idDupCheck").val('');
+					
+				}
+		}
+	});
+});
 
 var element_wrap = document.getElementById('wrap');
 
