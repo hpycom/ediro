@@ -16,7 +16,7 @@
  <div class="container">
 	
  	<h4 class="mb-4">회원가입</h4>
-	<form id="subform" class="needs-validation" novalidate>
+	<form id="subform" class="needs-validation" action="/order/member/joinMember" method="post" novalidate>
 		 <div class="row">
 				
 			 <div class="col-md-8 mb-1 ">
@@ -40,7 +40,7 @@
 		              </div>
 		                
 					  <div class="invalid-feedback">
-		                  	아이디를 여섯자 이상 주세요
+		                  	아이디를 여섯자 이상 입력해 주세요
 		              </div>
 		              
 			     </div>
@@ -62,12 +62,19 @@
 	              </div>
 		 	</div>
 		 	<div class="col-md-3 mb-1 ">
-			  <label for="memberID_Cfm">비밀번호 확인</label>
+			  <label for="memberPwd_Cfm">비밀번호 확인</label>
 				<input type="password" class="form-control" name="memberPwd_Cfm" id="memberPwd_Cfm" pattern=".{4,}" required/>
 				  <div class="invalid-feedback">
-	                  	비밀번호 확인을 위해 바르게 입력해 주세요
+	                  	비밀번호를 4자 이상 입력해 주세요
 	              </div>
+	              
+	               <input type="text" class="form-control " id = "passWordCheck" required>
+					<div class="invalid-feedback">
+		                  비밀번호가 일치하지 않습니다.
+		              </div>
+			   
 		 	</div>
+		 	<p class="help-block" id="p_passCfmChk"><span></span></p>
 		 </div>
 		 
 		  <div class="row">
@@ -131,7 +138,7 @@
           
 	           <div class="row mb-4">
 			        <div class="col-md-4 input-group">
-			             <input type="text" name="postNo" id="postNo" class="form-control" placeholder="우편번호" required>
+			             <input type="text" name="postno" id="postno" class="form-control" placeholder="우편번호" required>
 	                 	   <div class="input-group-append">
 	                 	 	  <input class="btn btn-outline-dark" type="button" value="우편번호찾기" onclick="sample3_execDaumPostcode()">
 	                 	   </div>
@@ -155,7 +162,7 @@
 	                </div>
 	                 <div class="col-md-8 ">
 	                 	<label></label>
-	                 	  <input type="text" name="address-detail"  id="address-detail" class="form-control" placeholder="상세주소" required >
+	                 	  <input type="text" name="address_detail"  id="address_detail" class="form-control" placeholder="상세주소" required >
 	                        <div class="invalid-feedback">
 		                  	상세주소를 입력해 주세요.
 		              		</div>
@@ -167,7 +174,7 @@
 	
 		<div class="row">
 			<div class="col-md-2 ml-1">
-				<button class="btn btn-primary btn-lg btn-block" type="submit">저장</button>
+				<button class="btn btn-primary btn-lg btn-block" type="submit" id="btnSubmit">저장</button>
 			</div>
 		</div>
 	</form>
@@ -176,18 +183,42 @@
  
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>
 <script src="/resources/bootStrap/js/bootstrap.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
 
+
+	
 $("#idDupCheck").hide();
+$("#passWordCheck").hide();
 
 $("#memberID").change(function() {
 	$('#idDupCheck').val('');
 	$("#p_dupChkID span").text('');
 });
+
+
+function passcheck() {
+	var pass1 = $('#memberPwd').val();
 	
+	var pass2 = $('#memberPwd_Cfm').val();
+	var m = document.getElementById("passWordCheck");
+	if(pass1 != pass2)
+		{
+			m.setCustomValidity('비밀번호가 일치하지 않습니다.');
+			$("#passWordCheck").val('');
+			return false;
+		}
+	else
+		{
+			m.setCustomValidity('');
+			$("#passWordCheck").val('checked');
+			
+			return true;
+		}
+}
+
 (function() {
   'use strict';
  
@@ -198,6 +229,11 @@ $("#memberID").change(function() {
     // Loop over them and prevent submission
     var validation = Array.prototype.filter.call(forms, function(form) {
       form.addEventListener('submit', function(event) {
+    	 if( passcheck()===false)
+    	 {
+             event.preventDefault();
+             event.stopPropagation();
+           }
         if (form.checkValidity() === false) {
           event.preventDefault();
           event.stopPropagation();
@@ -213,11 +249,9 @@ $("#memberID").change(function() {
 $("#btnDupIDcheck").on("click",function(){
 	
 	var idName = $("#memberID").val();
-	if(idName.length <6)
-		{
-			alert('여섯자 이상 넣어주세요!');
-			return;
-		}
+	if(idName.length < 6)
+		return;
+	
 	$.ajax({
 		type:'POST',
 		url:'/order/member_rest/isMember/'+idName,
@@ -284,7 +318,7 @@ function sample3_execDaumPostcode() {
             }
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('postNo').value = data.zonecode; //5자리 새우편번호 사용
+            document.getElementById('postno').value = data.zonecode; //5자리 새우편번호 사용
             document.getElementById('address').value = fullAddr;
 
             // iframe을 넣은 element를 안보이게 한다.

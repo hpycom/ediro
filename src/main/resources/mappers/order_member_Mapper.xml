@@ -10,9 +10,9 @@
   </select>
   <insert id="insertMember">
   	insert into member(memberID,memberPwd,companyName,bossName,bizRegNo,postno,
-  					address,phone,phone_2,email,homepage,fax) values
+  					address,address_detail,phone,phone_2,email,homepage,fax) values
   	(#{memberID},#{memberPwd},#{companyName},#{bossName},#{bizRegNo},#{postno},
-  	  #{address},#{phone},#{phone_2},#{email},#{homepage},#{fax})
+  	  #{address},#{address_detail},#{phone},#{phone_2},#{email},#{homepage},#{fax})
   </insert>
   
     <select id="sel_allMember" resultType="com.ediro.domain.member">
@@ -24,6 +24,7 @@
   	       bizRegNo,
   	       postno,
   		   address,
+  		   address_detail,
   		   phone,
   		   phone_2,
   		   email,

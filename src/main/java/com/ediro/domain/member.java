@@ -10,6 +10,7 @@ public class member {
 	private String bizRegNo;
 	private String postno;
 	private String address;
+	private String address_detail;
 	private String phone;
 	private String phone_2;
 	private String email;
@@ -105,6 +106,12 @@ public class member {
 	}
 	public void setMemberID(String memberID) {
 		this.memberID = memberID;
+	}
+	public String getAddress_detail() {
+		return address_detail;
+	}
+	public void setAddress_detail(String address_detail) {
+		this.address_detail = address_detail;
 	}
 	
 	
